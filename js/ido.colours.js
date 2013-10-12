@@ -11,7 +11,7 @@
         var that = this;
 
         this.popup_class = 'ido_colour_popup';
-        this.element_class = 'ido_colour_picker btn';
+        this.element_class = 'ido_colour_picker';
         this.disabled_class = 'disabled';
 
         this.$element = $(element);

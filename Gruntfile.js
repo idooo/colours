@@ -19,7 +19,8 @@ module.exports = function(grunt) {
 		less: {
 			main: {
 				options: {
-					style: 'compressed'
+					style: 'compressed',
+                    yuicompress: true
 				},
 				files: {
 					'dist/ido.colours.min.css': [ 'css/ido.colours.less' ]
