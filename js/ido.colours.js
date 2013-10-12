@@ -12,6 +12,7 @@
 
         this.popup_class = 'ido_colour_popup';
         this.element_class = 'ido_colour_picker btn';
+        this.disabled_class = 'disabled';
 
         this.$element = $(element);
         this.$popup = undefined;
@@ -24,6 +25,12 @@
         this.name = options.name || this.$element.data('name') || this.$element.attr('id') || 'color_picker';
         this.palette = this._parsePalette(options.palette || this.$element.data('palette') || 'black, white');
         this.color = options.color || this.$element.data('color') || this.palette[0];
+
+        this.disabled = this.$element.attr('disabled') || false;
+
+        if (typeof options.disabled !== 'undefined') {
+            this.disabled = options.disabled;
+        }
 
         this.palette_row_count = options.palette_row_count || this.$element.data('palette-row-count') || 5;
         this.palette_size = options.palette_size || this.$element.data('palette-size') || 42;
@@ -86,15 +93,22 @@
             this._bindPaletteCallbacks();
 
             this.$element.on('click', function() {
+
                 that.changePopupPosition();
 
                 if (that.isOpen) {
                     that.close();
                 }
                 else {
-                    that.open();
+                    if (!that.disabled) {
+                        that.open();
+                    }
                 }
             });
+
+            if (this.disabled) {
+                this.disable();
+            }
 
             return this;
         },
@@ -105,6 +119,13 @@
 
             this.$input.attr('name', this.name);
             this.$caption.text(this.caption);
+
+            if (this.disabled) {
+                this.disable();
+            }
+            else {
+                this.enable();
+            }
 
             if (update_palette) {
                 this.palette = this._parsePalette(this.palette);
@@ -251,7 +272,18 @@
             this.$popup.hide();
             this.isOpen = false;
             return this;
+        },
+
+        disable: function() {
+            this.disabled = true;
+            this.$element.addClass(this.disabled_class);
+        },
+
+        enable: function() {
+            this.disabled = false;
+            this.$element.removeClass(this.disabled_class);
         }
+
     };
 
     $.fn.idoColours = function(option, val) {
