@@ -38,7 +38,7 @@
             <div data-provide="ido-colours"
                  data-color="blue"
                  data-name="background_color"
-                 data-palette="red, white, blue"
+                 data-palette="orange, lime, vodka"
                     >
                 Second
             </div>
@@ -55,6 +55,23 @@
                 Fourth
             </div>
 
+            <hr>
+
+            <div data-provide="ido-colours"
+                 data-palette="orange, lime, vodka"
+                    >
+                Fifth
+            </div>
+
+            <hr>
+
+            <div id="colorpicker6"
+                 data-provide="ido-colours"
+                 data-palette="orange, lime, vodka"
+                    >
+                Sixth
+            </div>
+
         </article>
 
 		<script src="js/ido.colours.js"></script>
@@ -68,8 +85,17 @@
                $('#colorpicker4').idoColours({
                    'color': 'red',
                    'name': 'example_name',
-                   'palette': ['red', 'green', 'black']
+                   'palette': ['red', 'green', 'blue'],
+                   'onChangeColor': function(a,b,color) {
+                        alert('change: ' + color);
+                   },
+                   'onSelectColor': function(a,b,color) {
+                        alert('select: ' + color);
+                   }
                });
+
+               $('#colorpicker6').idoColours('color', 'lime') ;
+               $('#colorpicker6').idoColours('caption', 'Sixth Sith');
 
            });
 

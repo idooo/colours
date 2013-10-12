@@ -1,27 +1,15 @@
-/* ============================================================
- * ido colour picker
+/*!
+ * ido Colours 0.8.0
+ * http://shteinikov/p/colours
+ * MIT licensed
  *
- * Create custom styled color picker for RE:Search data project
- * based on jQuery element:
- *    $('#example').researchColorPicker();
- *
- * Use data fields for settings:
- *  <div id="example"
-         data-color="#red"
-         data-name="cma_color_header"
-         data-palette="#red, #green, #0000ff"
-    >
-         Background color
-    </div>
-
- * ... where data-name is hidden form field name
- *
- * ============================================================ */
+ * Alex Shteinikov, http://shteinikov.com
+ */
 
 (function($) {
     'use strict';
 
-    var IdoColourPicker = function(element) {
+    var IdoColourPicker = function(element, options) {
         var that = this;
 
         this.popup_class = 'ido_colour_popup';
@@ -29,18 +17,22 @@
 
         this.$element = $(element);
         this.$popup = undefined;
+        this.$color = undefined;
+        this.$caption = undefined;
         this.$input = undefined;
         this.isOpen = false;
 
-        // Default values
-        this.caption = this.$element.text();
-        this.color = this.$element.data('color') || 'white';
-        this.name = this.$element.data('name') || 'color';
-        this.palette = this.$element.data('palette') || 'black, white';
+        this.caption = options.caption || this.$element.text();
+        this.name = options.name || this.$element.data('name') || 'color';
+        this.palette = this._parsePalette(options.palette || this.$element.data('palette') || 'black, white');
+        this.color = options.color || this.$element.data('color') || this.palette[0];
 
         // Callbacks
-        this.onSelectColor = undefined;
-        this.onChangeColor = undefined;
+        this.onSelectColor = options.onSelectColor || function(){};
+        this.onChangeColor = options.onChangeColor || function(){};
+        this.onPaletteClick = options.onPaletteClick || function(){};
+        this.onPaletteOver = options.onPaletteOver || function(){};
+        this.onPaletteOut = options.onPaletteOut || function(){};
 
         this.init();
 
@@ -72,8 +64,9 @@
          * field), bind events
          */
         init: function () {
-            var that = this,
-                $caption = $('<div/>').addClass('rcp_caption').text(this.caption);
+            var that = this;
+
+            this.$caption = $('<div/>').addClass('rcp_caption').text(this.caption);
 
             this.$element
                 .addClass(this.element_class)
@@ -85,9 +78,11 @@
                 .attr('name', this.name)
                 .val(this.color);
 
-            this.$element.append([$caption, this.$color, this.$input]);
+            this.$element.append([this.$caption, this.$color, this.$input]);
 
             this.$popup = that.createPopup();
+
+            this._bindCallbacks();
 
             this.$element.on('click', function() {
                 that.changePopupPosition();
@@ -99,7 +94,18 @@
                     that.openPopup();
                 }
             });
+
             return this;
+        },
+
+        refresh: function() {
+            this.$color.css('background-color', this.color);
+            this.$input.val(this.color);
+
+            this.$input.attr('name', this.name);
+            this.$caption.text(this.caption);
+
+            this.palette = this._parsePalette(this.palette);
         },
 
         /*
@@ -122,15 +128,26 @@
             return result;
         },
 
-        /*
-         * Helper for callbacks
-         */
-        _callback: function(callback_name) {
-            // Execute callback if defined
-            if (typeof this[callback_name] !== 'undefined') {
-                return this[callback_name]();
+        _parsePalette: function(palette) {
+
+            if (Array.isArray(palette)) {
+                return palette;
             }
-            return false;
+
+            var colors = palette.split(',');
+            for (var i=0; i<colors.length; i++) {
+                colors[i] = $.trim(colors[i]);
+            }
+
+            return colors;
+        },
+
+        _bindCallbacks: function() {
+            var items = this.$popup.find('> div');
+
+            items.on('click', this.onPaletteClick);
+            items.on('mouseover', this.onPaletteOver);
+            items.on('mouseout', this.onPaletteOut);
         },
 
         /*
@@ -138,11 +155,10 @@
          */
         createPopup: function(){
             var $popup = $('<div/>').addClass(this.popup_class).hide(),
-                colors = this.palette.split(','),
                 that = this;
 
-            for (var i=0; i<colors.length; i++) {
-                var $color_button = $('<div/>').css('background-color', $.trim(colors[i]));
+            for (var i=0; i<that.palette.length; i++) {
+                var $color_button = $('<div/>').css('background-color', that.palette[i]);
 
                 $color_button.on('click', function(e){
                     var color = $(this).css('background-color'),
@@ -154,10 +170,10 @@
                     that.closePopup();
 
                     // Callbacks
-                    that._callback('onSelectColor');
+                    that.onSelectColor(that, this, that._rgb2hex(color));
 
                     if (oldcolor !== color) {
-                        that._callback('onChangeColor');
+                        that.onChangeColor(that, this, that._rgb2hex(color));
                     }
 
                     e.stopPropagation();
@@ -215,19 +231,23 @@
         }
     };
 
-    $.fn.idoColours = function() {
+    $.fn.idoColours = function(option, val) {
 
-        var chain = this.each(function () {
+        return this.each(function () {
 
             var $this = $(this),
-                data = $this.data('idoColours');
+                data = $this.data('idoColours'),
+                options = typeof option === 'object' && option;
 
             if (!data) {
-                $this.data('idoColours', new IdoColourPicker(this));
+                $this.data('idoColours', (data = new IdoColourPicker(this, $.extend({}, options))));
             }
-        });
+            if (typeof option === 'string') {
+                data[option] = val;
+                data.refresh();
+            }
 
-        return chain;
+        });
     };
 
     $('[data-provide="ido-colours"]').idoColours();
