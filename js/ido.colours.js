@@ -28,11 +28,10 @@
         this.color = options.color || this.$element.data('color') || this.palette[0];
 
         // Callbacks
-        this.onSelectColor = options.onSelectColor || function(){};
-        this.onChangeColor = options.onChangeColor || function(){};
-        this.onPaletteClick = options.onPaletteClick || function(){};
-        this.onPaletteOver = options.onPaletteOver || function(){};
-        this.onPaletteOut = options.onPaletteOut || function(){};
+        this.onSelectColor = options.onSelectColor || function(color, $color, $object){};
+        this.onChangeColor = options.onChangeColor || function(color, $color, $object){};
+        this.onPaletteOver = options.onPaletteOver || function(color, $color, $object){ };
+        this.onPaletteOut = options.onPaletteOut || function(color, $color, $object){};
 
         this.init();
 
@@ -82,7 +81,7 @@
 
             this.$popup = that.createPopup();
 
-            this._bindCallbacks();
+            this._bindPaletteCallbacks();
 
             this.$element.on('click', function() {
                 that.changePopupPosition();
@@ -98,14 +97,21 @@
             return this;
         },
 
-        refresh: function() {
+        refresh: function(update_palette) {
             this.$color.css('background-color', this.color);
             this.$input.val(this.color);
 
             this.$input.attr('name', this.name);
             this.$caption.text(this.caption);
 
-            this.palette = this._parsePalette(this.palette);
+            if (update_palette) {
+                this.palette = this._parsePalette(this.palette);
+                this._bindPaletteCallbacks();
+            }
+
+            console.log(update_palette);
+
+            return this;
         },
 
         /*
@@ -142,12 +148,25 @@
             return colors;
         },
 
-        _bindCallbacks: function() {
-            var items = this.$popup.find('> div');
+        _bindPaletteCallbacks: function() {
+            var that = this,
+                items = this.$popup.find('> div');
 
-            items.on('click', this.onPaletteClick);
-            items.on('mouseover', this.onPaletteOver);
-            items.on('mouseout', this.onPaletteOut);
+            $.each(items, function(i, item) {
+                var $item = $(item);
+
+                $item
+                    .unbind('mouseover')
+                    .on('mouseover', function(){
+                        return that.onPaletteOver(that._rgb2hex($item.css('background-color')), $item, that);
+                    });
+
+                $item
+                    .unbind('mouseout')
+                    .on('mouseout', function(){
+                        return that.onPaletteOut(that._rgb2hex($item.css('background-color')), $item, that);
+                    });
+            });
         },
 
         /*
@@ -170,10 +189,10 @@
                     that.closePopup();
 
                     // Callbacks
-                    that.onSelectColor(that, this, that._rgb2hex(color));
+                    that.onSelectColor(that._rgb2hex(color), $color_button, that);
 
                     if (oldcolor !== color) {
-                        that.onChangeColor(that, this, that._rgb2hex(color));
+                        that.onChangeColor(that._rgb2hex(color), $color_button, that);
                     }
 
                     e.stopPropagation();
@@ -202,32 +221,6 @@
             this.$popup.hide();
             this.isOpen = false;
             return this;
-        },
-
-        /*
-         * Helper method for bind palette events easily
-         */
-        bind: function(event, func) {
-            var that = this,
-                items = that.$popup.find('> div');
-
-            if (event === 'paletteclick') {
-                items.on('click', func);
-            }
-            else if (event === 'paletteover') {
-                items.on('mouseover', func);
-            }
-            else if (event === 'paletteout') {
-                items.on('mouseout', func);
-            }
-            else if (event === 'select') {
-                this.onSelectColor = func;
-            }
-            else if (event === 'change') {
-                this.onChangeColor = func;
-            }
-
-            return this;
         }
     };
 
@@ -243,8 +236,15 @@
                 $this.data('idoColours', (data = new IdoColourPicker(this, $.extend({}, options))));
             }
             if (typeof option === 'string') {
+                var update_palette = false,
+                    palette_options = ['palette', 'onPaletteOver', 'onPaletteOut'];
+
+                if (palette_options.indexOf(option) > -1) {
+                    update_palette = true;
+                }
+
                 data[option] = val;
-                data.refresh();
+                data.refresh(update_palette);
             }
 
         });

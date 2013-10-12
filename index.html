@@ -86,16 +86,28 @@
                    'color': 'red',
                    'name': 'example_name',
                    'palette': ['red', 'green', 'blue'],
-                   'onChangeColor': function(a,b,color) {
-                        alert('change: ' + color);
+                   'onChangeColor': function(color) {
+                       console.log('change: ' + color);
                    },
-                   'onSelectColor': function(a,b,color) {
-                        alert('select: ' + color);
+                   'onSelectColor': function(color) {
+                       console.log('select: ' + color);
+                   },
+                   'onPaletteOver': function(color) {
+                       console.log('over: ' + color);
+                   },
+                   'onPaletteOut': function(color) {
+                       console.log('out: ' + color);
                    }
                });
 
                $('#colorpicker6').idoColours('color', 'lime') ;
                $('#colorpicker6').idoColours('caption', 'Sixth Sith');
+
+               $('#colorpicker6').idoColours('color', 'lime') ;
+
+               $('#colorpicker6').idoColours('onPaletteOver', function(color) {
+                   console.log('over 666: ' + color);
+               });
 
            });
 
