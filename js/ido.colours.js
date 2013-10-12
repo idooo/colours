@@ -230,4 +230,6 @@
         return chain;
     };
 
+    $('[data-provide="ido-colours"]').idoColours();
+
 })(window.jQuery);

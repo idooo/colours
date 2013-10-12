@@ -26,15 +26,36 @@
 		<article class="examples">
 
             <div id="colorpicker"
-                 data-provide="research-color-picker"
                  data-color="#dd00dd"
-                 data-name="cma_color_header"
+                 data-name="header_color"
                  data-palette="red, white, blue"
                     >
-                Header, footer and title
-            </div><br>
+                First
+            </div>
 
-		</article>
+            <hr>
+
+            <div data-provide="ido-colours"
+                 data-color="blue"
+                 data-name="background_color"
+                 data-palette="red, white, blue"
+                    >
+                Second
+            </div>
+
+            <hr>
+
+            <div data-provide="ido-colours">
+                Third
+            </div>
+
+            <hr>
+
+            <div id="colorpicker4">
+                Fourth
+            </div>
+
+        </article>
 
 		<script src="js/ido.colours.js"></script>
 
@@ -43,6 +64,12 @@
            $(document).ready(function(){
 
                $('#colorpicker').idoColours();
+
+               $('#colorpicker4').idoColours({
+                   'color': 'red',
+                   'name': 'example_name',
+                   'palette': ['red', 'green', 'black']
+               });
 
            });
 
