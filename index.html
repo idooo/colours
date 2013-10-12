@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Colours</title>
+
+		<meta name="description" content="">
+		<meta name="author" content="Alex Shteinikov">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/demo.css">
+		<link rel="stylesheet" href="dist/ido.colours.css">
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+	</head>
+
+	<body>
+
+		<article class="examples">
+
+            <div id="colorpicker"
+                 data-provide="research-color-picker"
+                 data-color="#dd00dd"
+                 data-name="cma_color_header"
+                 data-palette="red, white, blue"
+                    >
+                Header, footer and title
+            </div><br>
+
+		</article>
+
+		<script src="js/ido.colours.js"></script>
+
+		<script>
+
+           $(document).ready(function(){
+
+               $('#colorpicker').idoColours();
+
+           });
+
+		</script>
+
+
+	</body>
+</html>

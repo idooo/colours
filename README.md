@@ -1,4 +1,4 @@
-ido-colours
+ido colours
 ===========
 
-Yet another colour picker
+Color picker for life!
