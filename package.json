@@ -1,6 +1,6 @@
 {
-  "name": "ido Colours",
-  "version": "0.5",
+  "name": "idoColours",
+  "version": "0.5.0",
   "description": "Color picker for life",
   "homepage": "http://shteinikov/p/colours",
   "scripts": {
@@ -20,7 +20,7 @@
     "grunt-contrib-jshint": "~0.2.0",
     "grunt-contrib-uglify": "~0.1.1",
     "grunt-contrib-watch": "~0.2.0",
-    "grunt-contrib-less": "~0.2.2",
+    "grunt-contrib-less": "~0.7.0",
     "grunt-contrib-connect": "~0.2.0",
     "grunt": "~0.4.0"
   },

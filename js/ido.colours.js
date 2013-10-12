@@ -18,7 +18,7 @@
  *
  * ============================================================ */
 
-!function($) {
+(function($) {
     'use strict';
 
     var IdoColourPicker = function(element) {
@@ -57,7 +57,7 @@
             // was executed
             setTimeout(function(){
                 if (container.is(':hidden')) {
-                    that.isOpen = false
+                    that.isOpen = false;
                 }
             }, 200);
         });
@@ -106,17 +106,20 @@
          * Function to convert hex format to a rgb color
          */
         _rgb2hex: function(rgb) {
-            var hex = function(x) {
-                return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
-            };
+
+            var result = "#000000",
+                hex = function(x) {
+                    return ("0" + parseInt(x, 16).toString(16)).slice(-2);
+                };
+
+            rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
 
             try {
-                rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-                return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+                result = "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
             }
-            catch (e) {
-                return "#000000"
-            }
+            catch (e) { }
+
+            return result;
         },
 
         /*
@@ -127,6 +130,7 @@
             if (typeof this[callback_name] !== 'undefined') {
                 return this[callback_name]();
             }
+            return false;
         },
 
         /*
@@ -201,10 +205,10 @@
                 items.on('mouseout', func);
             }
             else if (event === 'select') {
-                this.onSelectColor = func
+                this.onSelectColor = func;
             }
             else if (event === 'change') {
-                this.onChangeColor = func
+                this.onChangeColor = func;
             }
 
             return this;
@@ -226,4 +230,4 @@
         return chain;
     };
 
-}(window.jQuery);
+})(window.jQuery);
