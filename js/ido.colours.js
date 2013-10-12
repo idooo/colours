@@ -21,7 +21,7 @@
         this.isOpen = false;
 
         this.caption = options.caption || this.$element.text();
-        this.name = options.name || this.$element.data('name') || 'color';
+        this.name = options.name || this.$element.data('name') || this.$element.attr('id') || 'color_picker';
         this.palette = this._parsePalette(options.palette || this.$element.data('palette') || 'black, white');
         this.color = options.color || this.$element.data('color') || this.palette[0];
 
