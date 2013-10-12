@@ -2,8 +2,6 @@
  * ido Colours 0.8.0
  * http://shteinikov/p/colours
  * MIT licensed
- *
- * Alex Shteinikov, http://shteinikov.com
  */
 
 (function($) {
@@ -28,10 +26,10 @@
         this.color = options.color || this.$element.data('color') || this.palette[0];
 
         // Callbacks
-        this.onSelectColor = options.onSelectColor || function(color, $color, $object){};
-        this.onChangeColor = options.onChangeColor || function(color, $color, $object){};
-        this.onPaletteOver = options.onPaletteOver || function(color, $color, $object){ };
-        this.onPaletteOut = options.onPaletteOut || function(color, $color, $object){};
+        this.onSelectColor = options.onSelectColor || function(color, item, $object){};
+        this.onChangeColor = options.onChangeColor || function(color, item, $object){};
+        this.onPaletteOver = options.onPaletteOver || function(color, item, $object){ };
+        this.onPaletteOut = options.onPaletteOut || function(color, item, $object){};
 
         this.init();
 
@@ -79,7 +77,7 @@
 
             this.$element.append([this.$caption, this.$color, this.$input]);
 
-            this.$popup = that.createPopup();
+            this.$popup = that._createPopup();
 
             this._bindPaletteCallbacks();
 
@@ -87,10 +85,10 @@
                 that.changePopupPosition();
 
                 if (that.isOpen) {
-                    that.closePopup();
+                    that.close();
                 }
                 else {
-                    that.openPopup();
+                    that.open();
                 }
             });
 
@@ -106,10 +104,17 @@
 
             if (update_palette) {
                 this.palette = this._parsePalette(this.palette);
-                this._bindPaletteCallbacks();
-            }
 
-            console.log(update_palette);
+                this.$popup.find('> div').remove();
+                this._createPalette(this.$popup);
+
+                this._bindPaletteCallbacks();
+
+                if (this.palette.indexOf(this.color) === -1) {
+                    this.color = this.palette[0];
+                    this.refresh();
+                }
+            }
 
             return this;
         },
@@ -158,23 +163,19 @@
                 $item
                     .unbind('mouseover')
                     .on('mouseover', function(){
-                        return that.onPaletteOver(that._rgb2hex($item.css('background-color')), $item, that);
+                        return that.onPaletteOver(that._rgb2hex($item.css('background-color')), this, that);
                     });
 
                 $item
                     .unbind('mouseout')
                     .on('mouseout', function(){
-                        return that.onPaletteOut(that._rgb2hex($item.css('background-color')), $item, that);
+                        return that.onPaletteOut(that._rgb2hex($item.css('background-color')), this, that);
                     });
             });
         },
 
-        /*
-         * Create popup with custom palette and bind events
-         */
-        createPopup: function(){
-            var $popup = $('<div/>').addClass(this.popup_class).hide(),
-                that = this;
+        _createPalette: function($popup) {
+            var that = this;
 
             for (var i=0; i<that.palette.length; i++) {
                 var $color_button = $('<div/>').css('background-color', that.palette[i]);
@@ -186,13 +187,13 @@
                     that.$color.css('background-color', color);
                     that.$input.val(that._rgb2hex(color));
 
-                    that.closePopup();
+                    that.close();
 
                     // Callbacks
-                    that.onSelectColor(that._rgb2hex(color), $color_button, that);
+                    that.onSelectColor(that._rgb2hex(color), this, that);
 
                     if (oldcolor !== color) {
-                        that.onChangeColor(that._rgb2hex(color), $color_button, that);
+                        that.onChangeColor(that._rgb2hex(color), this, that);
                     }
 
                     e.stopPropagation();
@@ -201,7 +202,19 @@
 
                 $popup.append($color_button);
             }
-            $popup.insertBefore(that.$element);
+
+            return this;
+        },
+
+        /*
+         * Create popup with custom palette and bind events
+         */
+        _createPopup: function(){
+            var $popup = $('<div/>').addClass(this.popup_class).hide();
+
+            this._createPalette($popup);
+
+            $popup.insertBefore(this.$element);
 
             return $popup;
         },
@@ -211,13 +224,13 @@
             return this;
         },
 
-        openPopup: function() {
+        open: function() {
             this.$popup.show();
             this.isOpen = true;
             return this;
         },
 
-        closePopup: function() {
+        close: function() {
             this.$popup.hide();
             this.isOpen = false;
             return this;
