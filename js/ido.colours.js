@@ -25,6 +25,9 @@
         this.palette = this._parsePalette(options.palette || this.$element.data('palette') || 'black, white');
         this.color = options.color || this.$element.data('color') || this.palette[0];
 
+        this.palette_row_count = options.palette_row_count || this.$element.data('palette-row-count') || 5;
+        this.palette_size = options.palette_size || this.$element.data('palette-size') || 42;
+
         // Callbacks
         this.onSelectColor = options.onSelectColor || function(color, item, $object){};
         this.onChangeColor = options.onChangeColor || function(color, item, $object){};
@@ -78,6 +81,7 @@
             this.$element.append([this.$caption, this.$color, this.$input]);
 
             this.$popup = that._createPopup();
+            that._resizePopup();
 
             this._bindPaletteCallbacks();
 
@@ -107,6 +111,7 @@
 
                 this.$popup.find('> div').remove();
                 this._createPalette(this.$popup);
+                this._resizePopup();
 
                 this._bindPaletteCallbacks();
 
@@ -178,7 +183,11 @@
             var that = this;
 
             for (var i=0; i<that.palette.length; i++) {
-                var $color_button = $('<div/>').css('background-color', that.palette[i]);
+                var $color_button = $('<div/>').css({
+                    'background-color': that.palette[i],
+                    'width': that.palette_size,
+                    'height': that.palette_size
+                });
 
                 $color_button.on('click', function(e){
                     var color = $(this).css('background-color'),
@@ -206,6 +215,15 @@
             return this;
         },
 
+        _resizePopup: function() {
+            var $item = $(this.$popup.find(">:first-child")[0]),
+                size = $item.outerWidth(true) * this.palette_row_count + 1;
+
+            this.$popup.css('max-width', size);
+
+            return this;
+        },
+
         /*
          * Create popup with custom palette and bind events
          */
@@ -213,7 +231,6 @@
             var $popup = $('<div/>').addClass(this.popup_class).hide();
 
             this._createPalette($popup);
-
             $popup.insertBefore(this.$element);
 
             return $popup;
@@ -250,7 +267,9 @@
             }
             if (typeof option === 'string') {
                 var update_palette = false,
-                    palette_options = ['palette', 'onPaletteOver', 'onPaletteOut'];
+                    palette_options = [
+                        'palette', 'onPaletteOver', 'onPaletteOut', 'palette_size', 'palette_row_count'
+                    ];
 
                 if (palette_options.indexOf(option) > -1) {
                     update_palette = true;

@@ -28,7 +28,7 @@
             <div id="colorpicker"
                  data-color="#dd00dd"
                  data-name="header_color"
-                 data-palette="red, white, blue"
+                 data-palette="red, white, blue, red, white, blue, red, white, blue"
                     >
                 First
             </div>
@@ -76,7 +76,7 @@
 
             <div id="colorpicker7"
                  data-provide="ido-colours"
-                 data-palette="orange, lime, vodka"
+                 data-palette="red, white, blue, red, white, blue, red, white, blue"
                     >
                 Seventh
             </div>
@@ -93,6 +93,7 @@
 
                $('#colorpicker4').idoColours({
                    'color': 'red',
+                   'palette_size': 20,
                    'name': 'example_name',
                    'palette': ['red', 'green', 'blue'],
                    'onChangeColor': function(color) {
@@ -118,8 +119,13 @@
                    console.log('over 666: ' + color);
                });
 
-               $('#colorpicker7').idoColours('palette', ['#aa0000', '#990000', '#330000']) ;
+               $('#colorpicker7').idoColours('palette', [
+                   '#aa0000', '#990000', '#330000', '#aa0000', '#990000', '#330000',
+                   '#aa0000', '#990000', '#330000'
+               ]) ;
 
+               $('#colorpicker7').idoColours('palette_size', 20);
+               $('#colorpicker7').idoColours('palette_row_count', 7);
            });
 
 		</script>
