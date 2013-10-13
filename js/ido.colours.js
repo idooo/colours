@@ -13,6 +13,7 @@
         this.popup_class = 'ido_colour_popup';
         this.element_class = 'ido_colour_picker';
         this.disabled_class = 'disabled';
+        this.open_class = 'active';
 
         this.$element = $(element);
         this.$popup = undefined;
@@ -25,6 +26,8 @@
         this.name = options.name || this.$element.data('name') || this.$element.attr('id') || 'color_picker';
         this.palette = this._parsePalette(options.palette || this.$element.data('palette') || 'black, white');
         this.color = options.color || this.$element.data('color') || this.palette[0];
+
+        this.width = options.width || this.$element.data('width') || 0;
 
         this.disabled = this.$element.attr('disabled') || false;
 
@@ -50,6 +53,7 @@
 
             if ((!container.is(e.target) && container.has(e.target).length === 0) ) {
                 container.hide();
+                that.$element.removeClass(that.open_class);
             }
 
             // We're changing isOpen state with short timeout after click event
@@ -87,10 +91,14 @@
 
             this.$element.append([this.$caption, this.$color, this.$input]);
 
-            this.$popup = that._createPopup();
-            that._resizePopup();
+            this.$popup = this._createPopup();
+            this._resizePopup();
 
             this._bindPaletteCallbacks();
+
+            if (this.width) {
+                this.$element.css('width', this.width);
+            }
 
             this.$element.on('click', function() {
 
@@ -119,6 +127,10 @@
 
             this.$input.attr('name', this.name);
             this.$caption.text(this.caption);
+
+            if (this.width) {
+                this.$element.css('width', this.width);
+            }
 
             if (this.disabled) {
                 this.disable();
@@ -265,23 +277,27 @@
         open: function() {
             this.$popup.show();
             this.isOpen = true;
+            this.$element.addClass(this.open_class);
             return this;
         },
 
         close: function() {
             this.$popup.hide();
             this.isOpen = false;
+            this.$element.removeClass(this.open_class);
             return this;
         },
 
         disable: function() {
             this.disabled = true;
             this.$element.addClass(this.disabled_class);
+            return this;
         },
 
         enable: function() {
             this.disabled = false;
             this.$element.removeClass(this.disabled_class);
+            return this;
         }
 
     };

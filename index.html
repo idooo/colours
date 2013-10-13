@@ -15,7 +15,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link rel="stylesheet" href="css/demo.css">
-		<link rel="stylesheet" href="dist/ido.colours.css">
+		<link rel="stylesheet" href="dist/ido.colours.flat.css">
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
@@ -112,6 +112,7 @@
                $('#colorpicker4').idoColours({
                    'color': 'red',
                    'palette_size': 20,
+                   'width': '50%',
                    'name': 'example_name',
                    'palette': ['red', 'green', 'blue'],
                    'onChangeColor': function(color) {
@@ -132,6 +133,8 @@
                $('#colorpicker6').idoColours('caption', 'Sixth Sith');
 
                $('#colorpicker6').idoColours('color', 'lime') ;
+
+               $('#colorpicker6').idoColours('width', 150) ;
 
                $('#colorpicker6').idoColours('onPaletteOver', function(color) {
                    console.log('over 666: ' + color);
