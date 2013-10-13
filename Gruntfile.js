@@ -23,7 +23,8 @@ module.exports = function(grunt) {
                     yuicompress: true
 				},
 				files: {
-					'dist/ido.colours.min.css': [ 'css/ido.colours.less' ]
+					'dist/ido.colours.min.css': [ 'css/ido.colours.less' ],
+                    'dist/ido.colours.flat.min.css': [ 'css/ido.colours.flat.less' ]
 				}
 			}
 		},
