@@ -330,6 +330,6 @@
         });
     };
 
-    $('[data-provide="ido-colours"]').idoColours();
+    $('.colours').idoColours();
 
 })(window.jQuery);

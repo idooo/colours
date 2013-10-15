@@ -47,6 +47,7 @@ Colours provides options to control its behavior and appearance. You can set opt
     
     $('#element').colours({
       caption: 'Drinks',
+      name: 'drinks',
       palette: ['wine', 'vodka', 'blood'],
       width: 100,
     });
@@ -54,7 +55,7 @@ Colours provides options to control its behavior and appearance. You can set opt
 ... is equal to:
 
 	  <div class="colours"
-         data-name="Drinks"
+         data-name="drinks"
          data-palette="wine, vodka, blood"
          data-width="100px">
         Drinks
