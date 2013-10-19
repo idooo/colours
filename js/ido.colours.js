@@ -231,6 +231,8 @@
                         that.onChangeColor(that._rgb2hex(color), this, that);
                     }
 
+                    that.color = color;
+
                     e.stopPropagation();
                     e.preventDefault();
                 });
