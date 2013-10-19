@@ -161,20 +161,13 @@
          * Function to convert hex format to a rgb color
          */
         _rgb2hex: function(rgb) {
-
-            var result = "#000000",
-                hex = function(x) {
-                    return ("0" + parseInt(x, 16).toString(16)).slice(-2);
-                };
+            var hexDigits = new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
+            var hex = function(x) {
+                return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
+            };
 
             rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-
-            try {
-                result = "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
-            }
-            catch (e) { }
-
-            return result;
+            return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
         },
 
         _parsePalette: function(palette) {
@@ -302,7 +295,7 @@
 
     };
 
-    $.fn.idoColours = function(option, val) {
+    $.fn.colours = function(option, val) {
 
         return this.each(function () {
 
@@ -330,6 +323,6 @@
         });
     };
 
-    $('.colours').idoColours();
+    $('.colours').colours();
 
 })(window.jQuery);
