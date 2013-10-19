@@ -24,7 +24,7 @@ or use JavaScript to bind to custom element:
 	$('#element').colours();
 </script>	
 ```   
-Options can be passed via data attributes or JavaScript.
+Options can be passed via JavaScript.
 ```javascript
 $('#element').colours({
   'color': 'red',
@@ -34,7 +34,7 @@ $('#element').colours({
 });
 ```
 
-or you can pass it using `data-*` attributes:
+... or you can pass options using `data-*` attributes:
 ```html
 <div class="colours"
 	data-color="white"
@@ -43,6 +43,18 @@ or you can pass it using `data-*` attributes:
 	Background color
 </div>
 ```
+
+## Styles
+
+You can use "bootstrap 2 like" styles:
+```html
+<link rel="stylesheet" href="dist/ido.colours.min.css">
+```
+... or use flat styles instead (bootstrap 3 like):
+```html
+<link rel="stylesheet" href="dist/ido.colours.flat.min.css">
+```
+
 ## Configuration Options
 
 Colours provides options to control its behavior and appearance. You can set options via JS or HTML `data-*` attributes:
@@ -70,7 +82,7 @@ $('#element').colours('width', 150) ;
 ```
 **caption**
 
-Caption of color picker
+Caption of color picker (`data-caption`)
 ```javascript
 $('#element').colours({
 	caption: 'Text color'
@@ -78,7 +90,7 @@ $('#element').colours({
 ```
 **name**
 
-Name of the hidden form field attached to color picker to store color value
+Name of the hidden form field attached to color picker to store color value (`data-name`)
 ```javascript
 $('#element').colours({
 	name: 'text_color'
@@ -86,7 +98,7 @@ $('#element').colours({
 ```
 **color**
 
-Selected color. If is not defined - pick the first one from palette
+Selected color. If is not defined - pick the first one from palette (`data-color`)
 ```javascript
 $('#element').colours({
 	color: '#660152'
@@ -94,7 +106,7 @@ $('#element').colours({
 ```
 **width**
 
-Width of the component. The width can be defined using all formats accepted by CSS: 100px, 50%, auto
+Width of the component. The width can be defined using all formats accepted by CSS: 100px, 50%, auto (`data-width`)
 ```javascript
 $('#element').colours({
 	width: 200
@@ -112,7 +124,7 @@ Also you can use `disabled` attribute: `<div class="colours" disabled>Background
 
 **palette**
 
-Set the palette of available colors. You can pass array of strings or string with `,` divider
+Set the palette of available colors. You can pass array of strings or string with `,` divider (`data-palette`)
 ```javascript
 $('#element').colours({
 	palette: ['green', '#667788', 'white', '#333']
@@ -126,7 +138,7 @@ $('#element').colours({
 ```
 **palette_row_count**
 
-Count of colors in palette popup's row. 5 by default
+Count of colors in palette popup's row. 5 by default (`data-palette-row-count`)
 ```javascript
 $('#element').colours({
 	palette_row_count: 5
@@ -134,7 +146,7 @@ $('#element').colours({
 ```
 **palette_size**
 
-Size of palette colors elements in pixels. 42 by default
+Size of palette colors elements in pixels. 42 by default (`data-palette-size`)
 ```javascript
 $('#element').colours({
 	palette_size: 42
@@ -186,7 +198,7 @@ $('#element').colours({
 ```
 ## Browser support
 
-The project is tested in Chrome, Firefox, IE9+. It Should Work™ in the current stable releases of Chrome, Firefox, Safari, IE.
+The project is tested in Chrome, Firefox, IE9+, iOS7 Safari. It Should Work™ in the current stable releases of Chrome, Firefox, Safari, IE.
 
 ## License
 
