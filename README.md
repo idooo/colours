@@ -1,7 +1,7 @@
 Colours
 ===========
 
-Colours is a JQuery based plugin to provide an intuitive user interface for color picker for, designed to behave like regular Bootstrap selects
+Colours is a JQuery based plugin to provide an intuitive user interface for color picker, designed to behave like regular Bootstrap dropdowns
 
 ## Demo
 
