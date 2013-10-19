@@ -15,9 +15,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 		<link rel="stylesheet" href="css/demo.css">
-		<link rel="stylesheet" href="dist/ido.colours.flat.css">
+		<link rel="stylesheet" href="dist/ido.colours.css">
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?skin=desert"></script>
 
 	</head>
 
@@ -28,84 +29,104 @@
             <h1>Colours</h1>
 
             <p>
-                Color picker for users
+                Touch friendly color picker for people. For tasks where users do not want to select exactly
+                <span class="color-example">#26466D</span> color, but just want to find similar color to pick.
+                Do not make them think!
             </p>
 
-            <div id="colorpicker"
-                 data-color="#dd00dd"
-                 data-name="header_color"
-                 data-palette="red, white, blue, red, white, blue, red, white, blue"
-                    >
-                First
-            </div>
+            <p>
+                <a href="https://github.com/idooo/colours">Github repository</a> and
+                <a href="https://github.com/idooo/colours/blob/master/README.md">documentation</a>
+            </p>
 
-            <hr>
+            <div id="control1">Background color</div>
+            <div class="colours" disabled>Desktop color</div>
 
-            <div class="colours"
-                 data-color="white"
-                 data-name="background_color"
-                 data-palette="orange, lime, vodka"
-                    >
-                Second
-            </div>
+<pre class="prettyprint">
 
-            <hr>
+   &lt;div id="control1"&gt;Background color&lt;/div&gt;
+   &lt;div class="colours" disabled&gt;Desktop color&lt;/div&gt;
 
-            <div class="colours">
-                Third
-            </div>
 
-            <hr>
+</pre>
 
-            <div id="colorpicker4">
-                Fourth
-            </div>
+<pre class="prettyprint">
 
-            <hr>
+    var flat_palette = [ "#1abc9c", "#2ecc71", "#3498db", ... ];
 
-            <div class="colours"
-                 data-palette="orange, lime, vodka"
-                    >
-                Fifth
-            </div>
+    $('#control1').colours({
+       palette: palette1,
+       color: '#95a5a6',
+       onChangeColor: function(color) {
+           $('body').css('background-color', color);
+       }
+    });
 
-            <hr>
 
-            <div id="colorpicker6"
-                 class="colours"
-                 data-palette="orange, lime, vodka"
-                    >
-                Sixth
-            </div>
+</pre>
 
-            <hr>
+            <p>
+                Small size, mobile friendly, simple, autobindings, additional bootstrap3-like flat
+                styles to use with your 'modern' website.
+            </p>
 
-            <div id="colorpicker7"
-                 class="colours"
-                 data-palette="red, white, blue, red, white, blue, red, white, blue"
-                    >
-                Seventh
-            </div>
+            <div id="control2">Text color</div>
 
-            <hr>
+<pre class="prettyprint">
 
-            <div id="colorpicker8"
-                 class="colours"
-                 data-palette="red, white, blue, red, white, blue, red, white, blue"
-                 disabled >
-                Eighth
-            </div>
+    $('#control2').colours({
+        palette: flat_palette,
+        color: 'black',
+        width: 200,
+        palette_size: 26,
+        palette_row_count: 8,
+        onChangeColor: function(color) {
+            $('body').css('color', color);
+        }
+    });
 
-            <hr>
 
-            <div id="colorpicker9"
-                 class="colours"
-                 data-palette="red, white, blue, red, white, blue, red, white, blue"
-                 disabled >
-                Nine inch nails - With Teeth [00:03] 256kbps
-            </div>
+</pre>
 
-            <a href="https://github.com/idooo/colours"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+
+            <p>
+                Callbacks and helpers to save your day
+            </p>
+
+            <div id="control3">Yet another picker</div>
+            <div id="example">#95a5a6</div>
+
+<pre class="prettyprint">
+
+    $('#control3').colours({
+        palette: flat_palette,
+        color: '#95a5a6',
+        onChangeColor: function(color) {
+            $('#example')
+                    .text(color)
+                    .css('background-color', color);
+        },
+        onPaletteOver: function(color) {
+            $('#example').css('background-color', color);
+        },
+        onPaletteOut: function(color) {
+            $('#example').css('background-color', this.color);
+        }
+    });
+
+
+</pre>
+
+            <a href="https://github.com/idooo/colours"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+
+            <p>
+                Once again: <a href="https://github.com/idooo/colours">Github repository</a> and
+                <a href="https://github.com/idooo/colours/blob/master/README.md">documentation</a>
+            </p>
+
+            <p>
+                Alex Shteinikov, 2013, <a href="http://shteinikov.com">shteinikov.com</a>
+            </p>
 
         </article>
 
@@ -113,52 +134,51 @@
 
 		<script>
 
-           $(document).ready(function(){
+            var flat_palette = [
+                "#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e",
+                "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#2c3e50",
+                "#f1c40f", "#e67e22", "#e74c3c", "#ecf0f1", "#95a5a6",
+                "#f39c12", "#d35400", "#c0392b", "#bdc3c7", "#7f8c8d"
+            ];
 
-               $('#colorpicker').idoColours();
+            $(document).ready(function(){
 
-               $('#colorpicker4').idoColours({
-                   'color': 'red',
-                   'palette_size': 20,
-                   'width': '50%',
-                   'name': 'example_name',
-                   'palette': ['red', 'green', 'blue'],
-                   'onChangeColor': function(color) {
-                       console.log('change: ' + color);
-                   },
-                   'onSelectColor': function(color) {
-                       console.log('select: ' + color);
-                   },
-                   'onPaletteOver': function(color) {
-                       console.log('over: ' + color);
-                   },
-                   'onPaletteOut': function(color) {
-                       console.log('out: ' + color);
-                   }
-               });
+                $('#control1').colours({
+                    palette: flat_palette,
+                    color: '#95a5a6',
+                    onChangeColor: function(color) {
+                       $('body').css('background-color', color);
+                    }
+                });
 
-               $('#colorpicker6').idoColours('color', 'lime') ;
-               $('#colorpicker6').idoColours('caption', 'Sixth Sith');
+                $('#control2').colours({
+                    palette: flat_palette,
+                    color: 'black',
+                    width: 200,
+                    palette_size: 26,
+                    palette_row_count: 8,
+                    onChangeColor: function(color) {
+                        $('body').css('color', color);
+                    }
+                });
 
-               $('#colorpicker6').idoColours('color', 'lime') ;
+                $('#control3').colours({
+                    palette: flat_palette,
+                    color: '#95a5a6',
+                    onChangeColor: function(color) {
+                        $('#example')
+                                .text(color)
+                                .css('background-color', color);
+                    },
+                    onPaletteOver: function(color) {
+                        $('#example').css('background-color', color);
+                    },
+                    onPaletteOut: function(color) {
+                        $('#example').css('background-color', this.color);
+                    }
+                });
 
-               $('#colorpicker6').idoColours('width', 150) ;
-
-               $('#colorpicker6').idoColours('onPaletteOver', function(color) {
-                   console.log('over 666: ' + color);
-               });
-
-               $('#colorpicker7').idoColours('palette', [
-                   '#aa0000', '#990000', '#330000', '#aa0000', '#990000', '#330000',
-                   '#aa0000', '#990000', '#330000'
-               ]) ;
-
-               $('#colorpicker7').idoColours('palette_size', 20);
-               $('#colorpicker7').idoColours('palette_row_count', 7);
-
-               // $('#colorpicker8').idoColours('disabled', true);
-
-           });
+            });
 
 		</script>
 
