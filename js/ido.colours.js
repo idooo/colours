@@ -1,5 +1,5 @@
 /*!
- * ido Colours 0.8.0
+ * Colours 0.6.0
  * http://shteinikov/p/colours
  * MIT licensed
  */
@@ -7,7 +7,7 @@
 (function($) {
     'use strict';
 
-    var IdoColourPicker = function(element, options) {
+    var ColourPicker = function(element, options) {
         var that = this;
 
         this.popup_class = 'ido_colour_popup';
@@ -66,9 +66,9 @@
         });
     };
 
-    IdoColourPicker.prototype = {
+    ColourPicker.prototype = {
 
-        constructor: IdoColourPicker,
+        constructor: ColourPicker,
 
         /*
          * Init colour picker: create nested elements (caption, colors, hidden
@@ -302,11 +302,11 @@
         return this.each(function () {
 
             var $this = $(this),
-                data = $this.data('idoColours'),
+                data = $this.data('Colours'),
                 options = typeof option === 'object' && option;
 
             if (!data) {
-                $this.data('idoColours', (data = new IdoColourPicker(this, $.extend({}, options))));
+                $this.data('Colours', (data = new ColourPicker(this, $.extend({}, options))));
             }
             if (typeof option === 'string') {
                 var update_palette = false,

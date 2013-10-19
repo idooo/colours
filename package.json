@@ -1,6 +1,6 @@
 {
-  "name": "idoColours",
-  "version": "0.5.0",
+  "name": "Colours",
+  "version": "0.6.0",
   "description": "Color picker for life",
   "homepage": "http://shteinikov/p/colours",
   "scripts": {

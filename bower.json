@@ -1,6 +1,6 @@
 {
-  "name": "idoColours",
-  "version": "0.5.0",
+  "name": "Colours",
+  "version": "0.6.0",
   "main": ["./dist/ido.colours.min.js"],
   "devDependencies": {
     "grunt-contrib-jshint": "~0.2.0",
