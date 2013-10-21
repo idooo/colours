@@ -10,10 +10,12 @@
     var ColourPicker = function(element, options) {
         var that = this;
 
-        this.popup_class = 'ido_colour_popup';
-        this.element_class = 'ido_colour_picker';
+        this.popup_class = 'ido-colour-popup';
+        this.element_class = 'ido-colour-picker';
         this.disabled_class = 'disabled';
         this.open_class = 'active';
+        this.caption_class = 'rcp-caption';
+        this.color_class = 'rcp-color';
 
         this.$element = $(element);
         this.$popup = undefined;
@@ -77,13 +79,13 @@
         init: function () {
             var that = this;
 
-            this.$caption = $('<div/>').addClass('rcp_caption').text(this.caption);
+            this.$caption = $('<div/>').addClass(this.caption_class).text(this.caption);
 
             this.$element
                 .addClass(this.element_class)
                 .text('');
 
-            this.$color = $('<div/>').addClass('rcp_color').css('background-color', this.color);
+            this.$color = $('<div/>').addClass(this.color_class).css('background-color', this.color);
             this.$input = $('<input/>')
                 .attr('type', 'hidden')
                 .attr('name', this.name)
