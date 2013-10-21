@@ -156,22 +156,22 @@ $('#element').colours({
 
 Colours class exposes a few events for manipulating the colors.
 
-**onSelectColor**
+**onColorSelect**
 
 Fired when the color is selected.
 ```javascript
 $('#element').colours({
-	'onSelectColor': function(color, palette_color, element) {
+	'onColorSelect': function(color) {
 		...
 	}
 });
 ```
-**onChangeColor**
+**onColorChange**
 
 Fired when the color is changed during selected (only if old color != new color).
 ```javascript
 $('#element').colours({
-	'onChangeColor': function(color, palette_color, element) {
+	'onColorChange': function(color) {
 		...
 	}
 });
@@ -181,7 +181,7 @@ $('#element').colours({
 Fired when the mouse pointer is over any of palette colors
 ```javascript
 $('#element').colours({
-	'onPaletteOver': function(color, palette_color, element) {
+	'onPaletteOver': function(color) {
 		...
 	}
 });
@@ -191,7 +191,7 @@ $('#element').colours({
 Fired when the mouse pointer is out of palette color
 ```javascript
 $('#element').colours({
-	'onPaletteOut': function(color, palette_color, element) {
+	'onPaletteOut': function(color) {
 		...
 	}
 });

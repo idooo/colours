@@ -52,7 +52,7 @@
     $('#control1').colours({
        palette: palette1,
        color: '#95a5a6',
-       onChangeColor: function(color) {
+       onColorChange: function(color) {
            $('body').css('background-color', color);
        }
     });
@@ -75,7 +75,7 @@
         width: 200,
         palette_size: 26,
         palette_row_count: 8,
-        onChangeColor: function(color) {
+        onColorChange: function(color) {
             $('body').css('color', color);
         }
     });
@@ -96,7 +96,7 @@
     $('#control3').colours({
         palette: flat_palette,
         color: '#95a5a6',
-        onChangeColor: function(color) {
+        onColorChange: function(color) {
             $('#example')
                     .text(color)
                     .css('background-color', color);
@@ -141,7 +141,7 @@
                 $('#control1').colours({
                     palette: flat_palette,
                     color: '#95a5a6',
-                    onChangeColor: function(color) {
+                    onColorChange: function(color) {
                        $('body').css('background-color', color);
                     }
                 });
@@ -152,7 +152,7 @@
                     width: 200,
                     palette_size: 26,
                     palette_row_count: 8,
-                    onChangeColor: function(color) {
+                    onColorChange: function(color) {
                         $('body').css('color', color);
                     }
                 });
@@ -160,7 +160,7 @@
                 $('#control3').colours({
                     palette: flat_palette,
                     color: '#95a5a6',
-                    onChangeColor: function(color) {
+                    onColorChange: function(color) {
                         $('#example')
                                 .text(color)
                                 .css('background-color', color);

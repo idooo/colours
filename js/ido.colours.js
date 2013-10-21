@@ -41,10 +41,10 @@
         this.palette_size = options.palette_size || this.$element.data('palette-size') || 42;
 
         // Callbacks
-        this.onSelectColor = options.onSelectColor || function(color, item, $object){};
-        this.onChangeColor = options.onChangeColor || function(color, item, $object){};
-        this.onPaletteOver = options.onPaletteOver || function(color, item, $object){ };
-        this.onPaletteOut = options.onPaletteOut || function(color, item, $object){};
+        this.onColorSelect = options.onColorSelect || function(color){};
+        this.onColorChange = options.onColorChange || function(color){};
+        this.onPaletteOver = options.onPaletteOver || function(color){ };
+        this.onPaletteOut = options.onPaletteOut || function(color){};
 
         this.init();
 
@@ -196,13 +196,13 @@
                 $item
                     .unbind('mouseover')
                     .on('mouseover', function(){
-                        return that.onPaletteOver(that._rgb2hex($item.css('background-color')), this, that);
+                        return that.onPaletteOver(that._rgb2hex($item.css('background-color')));
                     });
 
                 $item
                     .unbind('mouseout')
                     .on('mouseout', function(){
-                        return that.onPaletteOut(that._rgb2hex($item.css('background-color')), this, that);
+                        return that.onPaletteOut(that._rgb2hex($item.css('background-color')));
                     });
             });
         },
@@ -227,10 +227,10 @@
                     that.close();
 
                     // Callbacks
-                    that.onSelectColor(that._rgb2hex(color), this, that);
+                    that.onColorSelect(that._rgb2hex(color));
 
                     if (oldcolor !== color) {
-                        that.onChangeColor(that._rgb2hex(color), this, that);
+                        that.onColorChange(that._rgb2hex(color));
                     }
 
                     that.color = color;
