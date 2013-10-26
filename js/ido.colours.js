@@ -282,9 +282,13 @@
         },
 
         changePopupPosition: function(){
+            var padding_left = this.$element.css('padding-left').replace("px", ""),
+                padding_top = this.$element.css('padding-top').replace("px", ""),
+                border_left = this.$element.css('border-left-width').replace("px", "");
+
             this.$popup.css({
-                'margin-top': this.$element.outerHeight() - this.$element.css('padding-top').replace("px", ""),
-                'margin-left': -this.$element.css('padding-left').replace("px", "")
+                'margin-top': this.$element.outerHeight() - padding_top,
+                'margin-left': - padding_left - border_left
             });
 
             return this;

@@ -44,6 +44,21 @@ $('#element').colours({
 </div>
 ```
 
+You can use ```<input>``` element as target. In this case *colours* will get ```value``` and ```name``` attributes
+and assign values to ```color``` and ```name``` properties:
+```html
+<input class="colours" value="white" name="background_color" data-caption="Background color"/>
+```
+
+... is equal to:
+```javascript
+$('<input/>').colours({
+  'color': 'white',
+  'name': 'background_color',
+  'caption': 'Background color'
+});
+```
+
 ## Styles
 
 You can use "bootstrap 2 like" styles:
