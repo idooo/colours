@@ -276,13 +276,17 @@
             var $popup = $('<div/>').addClass(this.popup_class).hide();
 
             this._createPalette($popup);
-            $popup.insertBefore(this.$element);
+            $popup.prependTo(this.$element);
 
             return $popup;
         },
 
         changePopupPosition: function(){
-            this.$popup.css('margin-top', this.$element.outerHeight() + 2);
+            this.$popup.css({
+                'margin-top': this.$element.outerHeight() - this.$element.css('padding-top').replace("px", ""),
+                'margin-left': -this.$element.css('padding-left').replace("px", "")
+            });
+
             return this;
         },
 
