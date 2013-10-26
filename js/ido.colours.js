@@ -282,9 +282,15 @@
         },
 
         changePopupPosition: function(){
+
             var padding_left = this.$element.css('padding-left').replace("px", ""),
                 padding_top = this.$element.css('padding-top').replace("px", ""),
                 border_left = this.$element.css('border-left-width').replace("px", "");
+
+            // IE 8 fix for popup positioning
+            if (navigator.appVersion.indexOf("MSIE 8.") !== -1) {
+                padding_left = parseInt(padding_left, 10) + this.$caption.outerWidth();
+            }
 
             this.$popup.css({
                 'margin-top': this.$element.outerHeight() - padding_top,
