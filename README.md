@@ -198,7 +198,7 @@ $('#element').colours({
 ```
 ## Browser support
 
-The project is tested in Chrome, Firefox, IE9+, iOS7 Safari. It Should Work™ in the current stable releases of Chrome, Firefox, Safari, IE.
+The project is tested in Chrome, Firefox, IE8+, iOS7 Safari. It Should Work™ in the current stable releases of Chrome, Firefox, Safari, IE.
 
 ## License
 

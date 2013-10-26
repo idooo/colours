@@ -168,13 +168,18 @@
                 return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
             };
 
+            // IE8 hex check
+            if (rgb[0] === '#') {
+                return rgb;
+            }
+
             rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
             return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
         },
 
         _parsePalette: function(palette) {
 
-            if (Array.isArray(palette)) {
+            if ($.isArray(palette)) {
                 return palette;
             }
 
