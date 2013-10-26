@@ -24,7 +24,7 @@
         this.$input = undefined;
         this.isOpen = false;
 
-        this.caption = options.caption || this.$element.text();
+        this.caption = options.caption || this.$element.text() || this.$element.data('caption');
         this.name = options.name || this.$element.data('name') || this.$element.attr('id') || 'color_picker';
         this.palette = this._parsePalette(options.palette || this.$element.data('palette') || 'black, white');
         this.color = options.color || this.$element.data('color') || this.palette[0];
@@ -78,6 +78,16 @@
          */
         init: function () {
             var that = this;
+
+            if (this.$element.is("input")) {
+                var $old_element = this.$element;
+
+                this.name = $old_element.attr('name') || this.name;
+                this.color = $old_element.attr('value') || this.color;
+
+                this.$element = $('<div/>').insertBefore($old_element);
+                $old_element.remove();
+            }
 
             this.$caption = $('<div/>').addClass(this.caption_class).text(this.caption);
 
