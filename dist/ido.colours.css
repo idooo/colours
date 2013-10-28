@@ -39,7 +39,7 @@
   position: absolute;
   z-index: 1000;
   background-color: white;
-  padding: 0 9px 5px 0;
+  padding: 0 9px 9px 0;
   display: inline-block;
   max-width: 256px;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -54,6 +54,7 @@
   padding-top: 6px;
   text-align: center;
   border-top: 1px solid #cccccc;
+  margin-bottom: -4px;
 }
 .rcp-colour-popup .rcp-bottom input {
   font-size: 14px;
