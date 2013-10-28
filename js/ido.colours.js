@@ -1,5 +1,5 @@
 /*!
- * Colours 0.6.0
+ * Colours 0.6.5
  * http://shteinikov/p/colours
  * MIT licensed
  */
