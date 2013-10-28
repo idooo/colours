@@ -312,11 +312,14 @@
                 }
 
                 // Close popup on enter or esc
-                var keyCode = e.keyCode || e.which;
-                if ([13, 27].indexOf(keyCode) !== -1) {
-                    that.close();
-                    e.preventDefault();
+                try {
+                    var keyCode = e.keyCode || e.which;
+                    if ([13, 27].indexOf(keyCode) !== -1) {
+                        that.close();
+                        e.preventDefault();
+                    }
                 }
+                catch (x) {}
             });
 
             return this.$input;
