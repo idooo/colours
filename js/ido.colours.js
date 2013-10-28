@@ -10,12 +10,14 @@
     var ColourPicker = function(element, options) {
         var that = this;
 
-        this.popup_class = 'ido-colour-popup';
-        this.element_class = 'ido-colour-picker';
+        this.popup_class = 'rcp-colour-popup';
+        this.element_class = 'rcp-colour-picker';
         this.disabled_class = 'disabled';
         this.open_class = 'active';
         this.caption_class = 'rcp-caption';
         this.color_class = 'rcp-color';
+        this.input_class = 'rcp-input';
+        this.bottom_class = 'rcp-bottom';
 
         this.$element = $(element);
         this.$popup = undefined;
@@ -28,6 +30,8 @@
         this.name = options.name || this.$element.data('name') || this.$element.attr('id') || 'color_picker';
         this.palette = this._parsePalette(options.palette || this.$element.data('palette') || 'black, white');
         this.color = options.color || this.$element.data('color') || this.palette[0];
+
+        this.show_field = options.show_field || this.$element.data('show-field') || false;
 
         this.width = options.width || this.$element.data('width') || 0;
 
@@ -53,18 +57,20 @@
         $(document).mouseup(function (e) {
             var container = that.$popup;
 
-            if ((!container.is(e.target) && container.has(e.target).length === 0) ) {
+            if (e.target.className !== that.input_class) {
                 container.hide();
                 that.$element.removeClass(that.open_class);
-            }
 
-            // We're changing isOpen state with short timeout after click event
-            // was executed
-            setTimeout(function(){
-                if (container.is(':hidden')) {
-                    that.isOpen = false;
-                }
-            }, 200);
+                that._checkValidInput();
+
+                // We're changing isOpen state with short timeout after click event
+                // was executed
+                setTimeout(function(){
+                    if (container.is(':hidden')) {
+                        that.isOpen = false;
+                    }
+                }, 200);
+            }
         });
     };
 
@@ -96,12 +102,8 @@
                 .text('');
 
             this.$color = $('<div/>').addClass(this.color_class).css('background-color', this.color);
-            this.$input = $('<input/>')
-                .attr('type', 'hidden')
-                .attr('name', this.name)
-                .val(this.color);
 
-            this.$element.append([this.$caption, this.$color, this.$input]);
+            this.$element.append([this.$caption, this.$color]);
 
             this.$popup = this._createPopup();
             this._resizePopup();
@@ -114,7 +116,7 @@
 
             this.$element.on('click', function() {
 
-                that.changePopupPosition();
+                that._changePopupPosition();
 
                 if (that.isOpen) {
                     that.close();
@@ -169,8 +171,11 @@
             return this;
         },
 
-        /*
+        /**
          * Function to convert hex format to a rgb color
+         * @param rgb
+         * @returns {*}
+         * @private
          */
         _rgb2hex: function(rgb) {
             var hexDigits = new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
@@ -178,13 +183,26 @@
                 return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
             };
 
-            // IE8 hex check
             if (rgb[0] === '#') {
                 return rgb;
+            }
+            else if (this._isColor(rgb)) {
+                return '#' + rgb;
             }
 
             rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
             return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+        },
+
+        /**
+         * Check if input is valid
+         * and restore active color value if not
+         * @private
+         */
+        _checkValidInput: function() {
+            if (!this._isColor(this.$input.val())) {
+                this.$input.val(this.color);
+            }
         },
 
         _parsePalette: function(palette) {
@@ -203,7 +221,7 @@
 
         _bindPaletteCallbacks: function() {
             var that = this,
-                items = this.$popup.find('> div');
+                items = this.$popup.find('> span');
 
             $.each(items, function(i, item) {
                 var $item = $(item);
@@ -222,33 +240,36 @@
             });
         },
 
+        _changeColor: function(color) {
+            var old_color = this.$color.css('background-color');
+
+            this.$color.css('background-color', color);
+            this.$input.val(this._rgb2hex(color));
+
+            // Callbacks
+            this.onColorSelect(this._rgb2hex(color));
+
+            if (old_color !== color) {
+                this.onColorChange(this._rgb2hex(color));
+            }
+
+            this.color = color;
+        },
+
         _createPalette: function($popup) {
             var that = this;
 
             for (var i=0; i<that.palette.length; i++) {
-                var $color_button = $('<div/>').css({
+                var $color_button = $('<span/>').css({
                     'background-color': that.palette[i],
                     'width': that.palette_size,
                     'height': that.palette_size
                 });
 
                 $color_button.on('click', function(e){
-                    var color = $(this).css('background-color'),
-                        oldcolor = that.$color.css('background-color');
-
-                    that.$color.css('background-color', color);
-                    that.$input.val(that._rgb2hex(color));
-
+                    var color = $(this).css('background-color');
+                    that._changeColor(color);
                     that.close();
-
-                    // Callbacks
-                    that.onColorSelect(that._rgb2hex(color));
-
-                    if (oldcolor !== color) {
-                        that.onColorChange(that._rgb2hex(color));
-                    }
-
-                    that.color = color;
 
                     e.stopPropagation();
                     e.preventDefault();
@@ -269,19 +290,72 @@
             return this;
         },
 
-        /*
+        _isColor: function(color) {
+            return (/(^#{0,1}[0-9A-F]{6}$)|(^#{0,1}[0-9A-F]{3}$)/i).test(color);
+        },
+
+        _createInputField: function() {
+            var that = this;
+
+            // Create input field
+            this.$input = $('<input/>')
+                .attr('type', 'text')
+                .addClass(this.input_class)
+                .attr('name', this.name)
+                .val(this.color)
+                .on('click', function(e) { e.stopPropagation(); });
+
+            this.$input.on('keyup', function(e) {
+                var color = that.$input.val();
+                if (that._isColor(color)) {
+                    that._changeColor(color);
+                }
+
+                // Close popup on enter or esc
+                var keyCode = e.keyCode || e.which;
+                if ([13, 27].indexOf(keyCode) !== -1) {
+                    that.close();
+                    e.preventDefault();
+                }
+            });
+
+            return this.$input;
+
+        },
+
+        /**
          * Create popup with custom palette and bind events
+         * @returns {*}
+         * @private
          */
         _createPopup: function(){
-            var $popup = $('<div/>').addClass(this.popup_class).hide();
+            var $popup = $('<div/>')
+                .addClass(this.popup_class)
+                .hide();
 
+            // Create palette
             this._createPalette($popup);
+
+            // Create buffer div
+            $('<div/>').css('clear', 'both').appendTo($popup);
+
+            // Create bottom part with field
+            var $bottom = $('<div/>')
+                .addClass(this.bottom_class)
+                .appendTo($popup);
+
+            this._createInputField().appendTo($bottom);
+
+            if (!this.show_field) {
+                $bottom.hide();
+            }
+
             $popup.prependTo(this.$element);
 
             return $popup;
         },
 
-        changePopupPosition: function(){
+        _changePopupPosition: function(){
 
             var padding_left = this.$element.css('padding-left').replace("px", ""),
                 padding_top = this.$element.css('padding-top').replace("px", ""),
@@ -304,6 +378,10 @@
             this.$popup.show();
             this.isOpen = true;
             this.$element.addClass(this.open_class);
+
+            if (this.show_field) {
+                this.$input.focus();
+            }
             return this;
         },
 
@@ -311,6 +389,9 @@
             this.$popup.hide();
             this.isOpen = false;
             this.$element.removeClass(this.open_class);
+
+            this._checkValidInput();
+
             return this;
         },
 

@@ -1,4 +1,4 @@
-.ido-colour-picker {
+.rcp-colour-picker {
   font-family: Helvetica, Arial, Sans-Serif;
   display: inline-block;
   margin-bottom: 0;
@@ -17,11 +17,11 @@
   -ms-user-select: none;
   user-select: none;
 }
-.ido-colour-picker .rcp-caption {
+.rcp-colour-picker .rcp-caption {
   float: left;
   padding-right: 10px;
 }
-.ido-colour-picker .rcp-color {
+.rcp-colour-picker .rcp-color {
   float: right;
   width: 20px;
   height: 20px;
@@ -33,12 +33,13 @@
   -moz-box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.2);
   box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.2);
 }
-.ido-colour-popup {
+.rcp-colour-popup {
+  float: left;
   clear: both;
   position: absolute;
   z-index: 1000;
   background-color: white;
-  padding: 0 9px 9px 0;
+  padding: 0 9px 5px 0;
   display: inline-block;
   max-width: 256px;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -47,8 +48,22 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   border-radius: 5px;
 }
-.ido-colour-popup > div {
+.rcp-colour-popup .rcp-bottom {
+  margin-top: 9px;
+  margin-right: -9px;
+  padding-top: 6px;
+  text-align: center;
+  border-top: 1px solid #cccccc;
+}
+.rcp-colour-popup .rcp-bottom input {
+  font-size: 14px;
+  border: 1px solid #ccc;
+  padding: 3px 6px;
+  width: 130px;
+}
+.rcp-colour-popup span {
   cursor: pointer;
+  display: block;
   width: 42px;
   height: 42px;
   float: left;
@@ -62,12 +77,12 @@
   -moz-box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.2);
   box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.2);
 }
-.ido-colour-popup > div:hover {
+.rcp-colour-popup span:hover {
   -webkit-box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.5), 0px 2px 2px -2px rgba(0,0,0,0.4);
   -moz-box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.5), 0px 2px 2px -2px rgba(0,0,0,0.4);
   box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.5), 0px 2px 2px -2px rgba(0,0,0,0.4);
 }
-.ido-colour-picker {
+.rcp-colour-picker {
   padding: 7px 8px 6px 13px;
   line-height: 20px;
   color: #333333;
@@ -92,18 +107,18 @@
   -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
 }
-.ido-colour-picker:hover,
-.ido-colour-picker:focus,
-.ido-colour-picker:active,
-.ido-colour-picker.active,
-.ido-colour-picker.disabled,
-.ido-colour-picker[disabled] {
+.rcp-colour-picker:hover,
+.rcp-colour-picker:focus,
+.rcp-colour-picker:active,
+.rcp-colour-picker.active,
+.rcp-colour-picker.disabled,
+.rcp-colour-picker[disabled] {
   color: #333333;
   background-color: #e6e6e6;
   *background-color: #d9d9d9;
 }
-.ido-colour-picker:hover,
-.ido-colour-picker:focus {
+.rcp-colour-picker:hover,
+.rcp-colour-picker:focus {
   text-decoration: none;
   background-position: 0 -15px;
   -webkit-transition: background-position 0.1s linear;
@@ -111,21 +126,21 @@
   -o-transition: background-position 0.1s linear;
   transition: background-position 0.1s linear;
 }
-.ido-colour-picker:focus {
+.rcp-colour-picker:focus {
   outline: thin dotted #333;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
-.ido-colour-picker.active,
-.ido-colour-picker:active {
+.rcp-colour-picker.active,
+.rcp-colour-picker:active {
   background-image: none;
   outline: 0;
   -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
   -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
   box-shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
 }
-.ido-colour-picker.disabled,
-.ido-colour-picker[disabled] {
+.rcp-colour-picker.disabled,
+.rcp-colour-picker[disabled] {
   cursor: default;
   background-image: none;
   opacity: 0.65;

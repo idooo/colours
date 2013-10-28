@@ -119,6 +119,14 @@ $('#element').colours({
 	color: '#660152'
 });
 ```
+**show_field**
+
+Display input field in palette popup to set color manually (`data-show-field`), disabled by default
+```javascript
+$('#element').colours({
+	show_field: true
+});
+```
 **width**
 
 Width of the component. The width can be defined using all formats accepted by CSS: 100px, 50%, auto (`data-width`)

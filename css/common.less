@@ -1,6 +1,6 @@
 @import "mixins";
 
-.ido-colour-picker {
+.rcp-colour-picker {
   font-family: Helvetica, Arial, Sans-Serif;
   display: inline-block;
   margin-bottom: 0;
@@ -15,7 +15,7 @@
   .preventSelection();
 }
 
-.ido-colour-picker {
+.rcp-colour-picker {
 
   .rcp-caption {
     float: left;
@@ -32,21 +32,37 @@
   }
 }
 
-.ido-colour-popup {
+.rcp-colour-popup {
   float: left;
   clear: both;
   position: absolute;
   z-index: 1000;
   background-color: white;
-  padding: 0 9px 9px 0;
+  padding: 0 9px 5px 0;
   display: inline-block;
   max-width: 256px;
   border: 1px solid rgba(0, 0, 0, 0.15);
   .box-shadow(~"0 6px 12px rgba(0, 0, 0, 0.175)");
   border-radius: 5px;
 
-  & > div {
+  .rcp-bottom {
+    margin-top: 9px;
+    margin-right: -9px;
+    padding-top: 6px;
+    text-align: center;
+    border-top: 1px solid #cccccc;
+
+    input {
+      font-size: 14px;
+      border: 1px solid #ccc;
+      padding: 3px 6px;
+      width: 130px;
+    }
+  }
+
+  span {
     cursor: pointer;
+    display: block;
     width: 42px;
     height: 42px;
     float: left;
