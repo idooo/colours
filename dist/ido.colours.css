@@ -62,6 +62,9 @@
   padding: 3px 6px;
   width: 130px;
 }
+.rcp-colour-popup .rcp-bottom input.rcp-error {
+    border-color: #DA3030;
+}
 .rcp-colour-popup span {
   cursor: pointer;
   display: block;

@@ -18,6 +18,7 @@
         this.color_class = 'rcp-color';
         this.input_class = 'rcp-input';
         this.bottom_class = 'rcp-bottom';
+        this.error_class = 'rcp-error';
 
         this.$element = $(element);
         this.$popup = undefined;
@@ -203,6 +204,8 @@
             if (!this._isColor(this.$input.val())) {
                 this.$input.val(this.color);
             }
+            
+            this.$input.removeClass(this.error_class);
         },
 
         _parsePalette: function(palette) {
@@ -295,8 +298,6 @@
         },
 
         _createInputField: function() {
-            var that = this;
-
             // Create input field
             this.$input = $('<input/>')
                 .attr('type', 'text')
@@ -305,10 +306,14 @@
                 .val(this.color)
                 .on('click', function(e) { e.stopPropagation(); });
 
+            var that = this;
             this.$input.on('keyup', function(e) {
                 var color = that.$input.val();
                 if (that._isColor(color)) {
                     that._changeColor(color);
+                }
+                else {
+                    that.$input.addClass(that.error_class);
                 }
 
                 // Close popup on enter or esc
@@ -323,7 +328,6 @@
             });
 
             return this.$input;
-
         },
 
         /**
