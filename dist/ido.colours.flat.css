@@ -56,7 +56,8 @@
   border-top: 1px solid #cccccc;
   margin-bottom: -4px;
 }
-.rcp-colour-popup .rcp-bottom input {
+.rcp-colour-popup .rcp-bottom input[type='text'] {
+  display: inline-block;
   font-size: 14px;
   border: 1px solid #ccc;
   padding: 3px 6px;
