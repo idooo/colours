@@ -202,7 +202,7 @@
          */
         _checkValidInput: function() {
             if (!this._isColor(this.$input.val())) {
-                this.$input.val(this.color);
+                this.$input.val(this._rgb2hex(this.color));
             }
             
             this.$input.removeClass(this.error_class);
@@ -311,6 +311,7 @@
                 var color = that.$input.val();
                 if (that._isColor(color)) {
                     that._changeColor(color);
+                    that.$input.removeClass(that.error_class);
                 }
                 else {
                     that.$input.addClass(that.error_class);
